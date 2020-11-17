@@ -1,16 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-        <div class="navbar-brand text-success">conduit</div>
-        <ul class="navbar-nav pull-xs-right">
-            <li class="nav-item active">
-                <a href="#" routerLink="/" class="nav-link">Home</a>
-            </li>
+        <a class="navbar-brand text-success" routerLink="/">conduit</a>
+        <ul class="nav navbar-nav pull-xs-right">
             <li class="nav-item">
-                <a href="#" class="nav-link">Sign in</a>
+                <a routerLink="/" routerLinkActive="active" class="nav-link">Home</a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">Sign up</a>
-            </li>
+            <!-- user actions -->
+            <ng-container *ngIf="is_logged_in">
+                <li class="nav-item">
+                    <a routerlink="/editor" class="nav-link" routerlinkactive="active">
+                        <i class="ion-compose"></i>&nbsp;New Article
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerlink="/settings" class="nav-link" routerlinkactive="active">
+                        <i class="ion-gear-a"></i>&nbsp;Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerlinkactive="active">dong.nnq</a>
+                </li>
+            </ng-container>
+            <!-- auth -->
+            <ng-container *ngIf="!is_logged_in">
+                <li class="nav-item">
+                    <a routerLink="/login" routerLinkActive="active" class="nav-link">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/register" routerLinkActive="active" class="nav-link">Sign up</a>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </nav>

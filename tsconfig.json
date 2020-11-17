@@ -16,6 +16,5 @@
       "es2018",
       "dom"
     ],
-	"experimentalDecorators": true
   }
 }

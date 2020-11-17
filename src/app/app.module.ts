@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { SettingModule } from './setting/setting.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     AuthModule,
     HomeModule,
+    SettingModule,
     AppRoutingModule,
   ],
   providers: [],

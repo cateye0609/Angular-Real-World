@@ -2,9 +2,9 @@ export interface User {
     id: string;
     email: string;
     createAt: string;
-    updateAt: string;
+    updateAt?: string;
     username: string;
-    bio: string;
-    image: string;
+    bio?: string;
+    image?: string;
     token: string;
 }

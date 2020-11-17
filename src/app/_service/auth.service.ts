@@ -5,13 +5,17 @@ import { LoginModel, RegisterModel } from '../_model/auth.model';
 import { catchError } from 'rxjs/operators';
 import { CommonService } from './common.service';
 import { UserResponse } from '../_model/response.model';
+import { Router } from '@angular/router';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) { }
 
   // request header
@@ -45,5 +49,11 @@ export class AuthService {
   // check if user is logged in
   isLoggedIn() {
     return !!localStorage.getItem('token');
+  }
+
+  // logout
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

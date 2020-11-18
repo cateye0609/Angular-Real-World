@@ -19,8 +19,6 @@ export class LoginComponent implements OnInit {
 
   loginSubmit(data: LoginModel) {
     this.authService.login(data).subscribe(res => {
-      // save user
-      localStorage.setItem('user', JSON.stringify(res.user));
       // save token
       localStorage.setItem('token', res.user.token);
       // go to home page

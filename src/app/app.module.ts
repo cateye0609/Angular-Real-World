@@ -9,6 +9,7 @@ import { HomeModule } from './home/home.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { SettingModule } from './setting/setting.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SettingModule } from './setting/setting.module';
     AuthModule,
     HomeModule,
     SettingModule,
+    ProfileModule,
     AppRoutingModule,
   ],
   providers: [],

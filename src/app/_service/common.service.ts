@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
@@ -6,6 +6,16 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
+  // request header
+  public headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'charset': 'utf-8'
+  });
+
+  // header with token
+  createAuthorizedHeader(headers: HttpHeaders) {
+    return headers.append('Authorization', `Token ${localStorage.getItem('token')}`);
+  }
 
   constructor() { }
 

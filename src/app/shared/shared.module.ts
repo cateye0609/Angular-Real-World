@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { LayoutFooterComponent } from './layout-footer/layout-footer.component';
+import { ErrorsListComponent } from './errors-list/errors-list.component';
 
 @NgModule({
   declarations: [
     LayoutHeaderComponent,
-    LayoutFooterComponent
+    LayoutFooterComponent,
+    ErrorsListComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { LayoutFooterComponent } from './layout-footer/layout-footer.component';
   exports: [
     LayoutHeaderComponent,
     LayoutFooterComponent,
+    ErrorsListComponent,
     FormsModule,
     HttpClientModule
   ]

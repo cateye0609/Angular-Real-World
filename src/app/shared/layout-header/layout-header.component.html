@@ -8,17 +8,19 @@
             <!-- user actions -->
             <ng-container *ngIf="is_logged_in">
                 <li class="nav-item">
-                    <a routerlink="/editor" class="nav-link" routerlinkactive="active">
+                    <a class="nav-link" routerLink="/editor" routerlinkactive="active">
                         <i class="ion-compose"></i>&nbsp;New Article
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a routerlink="/settings" class="nav-link" routerlinkactive="active">
+                    <a class="nav-link" routerLink="/settings" routerlinkactive="active">
                         <i class="ion-gear-a"></i>&nbsp;Settings
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerlinkactive="active">dong.nnq</a>
+                    <a class="nav-link" routerlinkactive="active" [routerLink]="['/profile', user.username]" routerlinkactive="active">
+                        <img *ngIf="user.image" class="user-pic" [src]="user.image"> {{user.username}}
+                    </a>
                 </li>
             </ng-container>
             <!-- auth -->

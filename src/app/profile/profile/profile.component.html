@@ -1,0 +1,31 @@
+<div class="profile-page">
+    <div class="user-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-10 offset-md-1">
+                    <img 
+                        class="user-img" 
+                        [src]="profile?.image" alt="avatar"
+                        onerror="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'">
+                    <h4>{{profile?.username}}</h4>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 offset-md-1">
+                <div class="articles-toggle">
+                    <ul class="nav nav-pills outline-active">
+                        <li class="nav-item"><a class="nav-link" routerlinkactive="active" href="/profile/dong"> My
+                                Posts </a></li>
+                        <li class="nav-item"><a class="nav-link" routerlinkactive="active"
+                                href="/profile/dong/favorites"> Favorited Posts </a></li>
+                    </ul>
+                </div>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

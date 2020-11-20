@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { ArticleQueryOption } from '../_model/article-list-config.model';
 import { Article } from '../_model/article.model';
-import { ArticleListResponse, ArticleResponse } from '../_model/response.model';
+import { ArticleListResponse, ArticleResponse, TagListResponse } from '../_model/response.model';
 import { AuthService } from './auth.service';
 import { CommonService } from './common.service';
 
@@ -19,14 +20,13 @@ export class ArticleService {
   ) { }
 
   // get articles list
-  getArticlesList(tag?: string, author?: string, favorited?: string, limit?: string, offset?: string) {
+  getArticlesList(options: ArticleQueryOption) {
     let api_url = new URL(`${environment.api_url}/articles`);
-    let params = this.commonService.getParams(this.getArticlesList); // get params name
-    for (let i = 0; i < arguments.length; i++) {
-      if (arguments[i]) {
-        api_url.searchParams.append(params[i], arguments[i]);
-      }
-    }
+    Object.keys(options.option)
+      .forEach((key) => {
+        api_url.searchParams.append(key, options.option[key])
+      });
+
     let headers = this.commonService.headers;
     if (this.authService.isLoggedIn()) {
       headers = this.commonService.createAuthorizedHeader(headers);
@@ -38,12 +38,13 @@ export class ArticleService {
   }
 
   // get feed articles
-  getFeed(limit?: string, offset?: string) {
+  getFeed(options: ArticleQueryOption) {
     let api_url = new URL(`${environment.api_url}/articles/feed`);
-    let params = this.commonService.getParams(this.getArticlesList); // get params name
-    for (let i = 0; i < arguments.length; i++) {
-      api_url.searchParams.append(params[i], arguments[i]);
-    }
+    Object.keys(options.option)
+      .forEach((key) => {
+        api_url.searchParams.append(key, options.option[key])
+      });
+
     let headers = this.commonService.headers;
     return this.http.get<ArticleListResponse>(api_url.href, { headers: this.commonService.createAuthorizedHeader(headers) })
       .pipe(
@@ -60,13 +61,22 @@ export class ArticleService {
       );
   }
 
+  // get tags
+  getTags() {
+    let headers = this.commonService.headers;
+    return this.http.get<TagListResponse>(`${environment.api_url}/tags`, { headers: headers })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
   // create new article
   createArticle(article: Article) {
     let headers = this.commonService.headers;
     let body: ArticleResponse = {
       article: article
     };
-    return this.http.post<ArticleResponse>(`${environment.api_url}/articles`, { headers: this.commonService.createAuthorizedHeader(headers) })
+    return this.http.post<ArticleResponse>(`${environment.api_url}/articles`, body, { headers: this.commonService.createAuthorizedHeader(headers) })
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );

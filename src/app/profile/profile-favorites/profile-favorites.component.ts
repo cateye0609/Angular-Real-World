@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ArticleQueryOption } from 'src/app/_model/article-list-config.model';
 import { Article } from 'src/app/_model/article.model';
 import { ArticleService } from 'src/app/_service/article.service';
 
@@ -8,20 +10,23 @@ import { ArticleService } from 'src/app/_service/article.service';
   styleUrls: ['./profile-favorites.component.css']
 })
 export class ProfileFavoritesComponent implements OnInit {
-  articles: Article[];
+  query_options: ArticleQueryOption;
 
   constructor(
-    private articleService: ArticleService
-  ) { }
-
-  ngOnInit(): void {
-    this.getProfileFavorites();
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.query_options = { option: {} } as ArticleQueryOption;
   }
 
-  getProfileFavorites() {
-    let username = localStorage.getItem('username');
-    this.articleService.getArticlesList(null, null, username).subscribe(
-      res => this.articles = res.articles
-    )
+  ngOnInit(): void {
+    this.getUsername();
+  }
+
+  getUsername() {
+    this.activatedRoute.parent.params.subscribe(params => {
+      let username = params['username'];
+      this.query_options.option.favorited = username;
+    });
   }
 }

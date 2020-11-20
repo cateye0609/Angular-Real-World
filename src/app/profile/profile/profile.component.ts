@@ -38,10 +38,4 @@ export class ProfileComponent implements OnInit {
       this.profile = res.profile;
     })
   }
-
-  getMyArticle(username: string) {
-    this.articleService.getArticlesList(null, username).subscribe(
-      res => this.my_articles = res.articles
-    )
-  }
 }

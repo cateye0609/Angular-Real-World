@@ -26,12 +26,18 @@
                 <div class="articles-toggle">
                     <ul class="nav nav-pills outline-active">
                         <li class="nav-item">
-                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/profile', profile.username]">
+                            <a 
+                                class="nav-link"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                                [routerLink]="['/profile', profile?.username]">
                                 My Posts
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/profile',profile.username,'favorites']">
+                            <a
+                                class="nav-link"
+                                routerLinkActive="active"
+                                [routerLink]="['/profile', profile?.username,'favorites']">
                                 Favorited Posts
                             </a>
                         </li>

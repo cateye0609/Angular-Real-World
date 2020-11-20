@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from 'src/app/_model/article.model';
+import { ActivatedRoute } from '@angular/router';
+import { ArticleQueryOption } from 'src/app/_model/article-list-config.model';
 import { ArticleService } from 'src/app/_service/article.service';
 
 @Component({
@@ -8,19 +9,23 @@ import { ArticleService } from 'src/app/_service/article.service';
   styleUrls: ['./profile-articles.component.css']
 })
 export class ProfileArticlesComponent implements OnInit {
-  articles: Article[];
-
+  query_options: ArticleQueryOption;
+  private username: string;
   constructor(
-    private articleService: ArticleService
-  ) { }
-
-  ngOnInit(): void {
-    this.getProfileArticles();
+    private articleService: ArticleService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.query_options = { option: {} } as ArticleQueryOption;
   }
 
-  getProfileArticles() {
-    this.articleService.getArticlesList(null, localStorage.getItem('username')).subscribe(
-      res => this.articles = res.articles
-    )
+  ngOnInit(): void {
+    this.getUsername();
+  }
+
+  getUsername() {
+    this.activatedRoute.parent.params.subscribe(params => {
+      this.username = params['username'];
+      this.query_options.option.author = this.username;
+    });
   }
 }

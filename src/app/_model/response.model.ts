@@ -16,4 +16,8 @@ export interface ArticleResponse {
 
 export interface ArticleListResponse {
     articles: Article[];
+    articlesCount: number;
+}
+export interface TagListResponse {
+    tags: string[];
 }

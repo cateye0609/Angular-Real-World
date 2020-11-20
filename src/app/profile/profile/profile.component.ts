@@ -38,4 +38,16 @@ export class ProfileComponent implements OnInit {
       this.profile = res.profile;
     })
   }
+
+  followClicked(username: string, followed: boolean) {
+    if (followed) {
+      this.userService.unfollowUser(username).subscribe(
+        res => this.profile.following = false
+      );
+    } else {
+      this.userService.followUser(username).subscribe(
+        res => this.profile.following = true
+      );
+    }
+  }
 }

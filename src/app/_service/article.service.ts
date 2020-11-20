@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ArticleQueryOption } from '../_model/article-list-config.model';
-import { Article } from '../_model/article.model';
-import { ArticleListResponse, ArticleResponse, TagListResponse } from '../_model/response.model';
+import { Article, ArticleComment } from '../_model/article.model';
+import { ArticleListResponse, ArticleResponse, CommentResponse, TagListResponse } from '../_model/response.model';
 import { AuthService } from './auth.service';
 import { CommonService } from './common.service';
 
@@ -55,6 +55,9 @@ export class ArticleService {
   // get article
   getArticle(slug: string) {
     let headers = this.commonService.headers;
+    if (this.authService.isLoggedIn()) {
+      headers = this.commonService.createAuthorizedHeader(headers);
+    }
     return this.http.get<ArticleResponse>(`${environment.api_url}/articles/${slug}`, { headers: headers })
       .pipe(
         catchError(err => this.commonService.handleError(err))
@@ -65,6 +68,45 @@ export class ArticleService {
   getTags() {
     let headers = this.commonService.headers;
     return this.http.get<TagListResponse>(`${environment.api_url}/tags`, { headers: headers })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
+  // get article comments
+  getComments(slug: string) {
+    let headers = this.commonService.headers;
+    if (this.authService.isLoggedIn()) {
+      headers = this.commonService.createAuthorizedHeader(headers);
+    }
+    return this.http.get<CommentResponse>(`${environment.api_url}/articles/${slug}/comments`, { headers: headers })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
+  favoriteArticle(slug: string) {
+    let headers = this.commonService.headers;
+    return this.http.post<ArticleResponse>(`${environment.api_url}/articles/${slug}/favorite`, null, { headers: this.commonService.createAuthorizedHeader(headers) })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
+  unfavoriteArticle(slug: string) {
+    let headers = this.commonService.headers;
+    return this.http.delete<ArticleResponse>(`${environment.api_url}/articles/${slug}/favorite`, { headers: this.commonService.createAuthorizedHeader(headers) })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
+  addComment(slug: string, comment: string) {
+    let headers = this.commonService.headers;
+    const body = {
+      'comment': { 'body': comment }
+    }
+    return this.http.post<CommentResponse>(`${environment.api_url}/articles/${slug}/comments`, body, { headers: this.commonService.createAuthorizedHeader(headers) })
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );

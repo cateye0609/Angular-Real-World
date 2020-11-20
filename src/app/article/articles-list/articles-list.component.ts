@@ -21,6 +21,9 @@ export class ArticlesListComponent implements OnChanges {
   ) { }
 
   ngOnChanges(): void {
+    this.onLoad();
+  }
+  onLoad() {
     if (this.limit) {
       this.options.option.limit = this.limit;
       this.options.option.offset = 0;
@@ -41,5 +44,17 @@ export class ArticlesListComponent implements OnChanges {
   changePage(page: number) {
     this.options.option.offset = (page - 1) * this.limit;
     this.getArticles(this.options);
+  }
+
+  favoriteClicked(slug: string, favorited: boolean) {
+    if (favorited) {
+      this.articleService.unfavoriteArticle(slug).subscribe(
+        res => this.onLoad()
+      )
+    } else {
+      this.articleService.favoriteArticle(slug).subscribe(
+        res => this.onLoad()
+      )
+    }
   }
 }

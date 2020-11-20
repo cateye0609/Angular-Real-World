@@ -8,13 +8,15 @@ import { LayoutHeaderComponent } from './layout-header/layout-header.component';
 import { LayoutFooterComponent } from './layout-footer/layout-footer.component';
 import { ErrorsListComponent } from './errors-list/errors-list.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { MarkdownPipe } from '../_pipe/markdown.pipe';
 
 @NgModule({
   declarations: [
     LayoutHeaderComponent,
     LayoutFooterComponent,
     ErrorsListComponent,
-    PaginationComponent
+    PaginationComponent,
+    MarkdownPipe
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     LayoutFooterComponent,
     ErrorsListComponent,
     PaginationComponent,
+    MarkdownPipe,
     FormsModule,
     HttpClientModule
   ]

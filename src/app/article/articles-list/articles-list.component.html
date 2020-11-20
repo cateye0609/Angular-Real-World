@@ -1,22 +1,28 @@
 <!-- articles list -->
 <div class="article-preview" *ngFor="let article of articles">
     <div class="article-meta">
-        <a href="/profile/dong01">
+        <a [routerLink]="['/profile/',article.author.username]">
             <img [src]="article.author.image" alt="avt">
         </a>
         <div class="info">
             <a class="author" [routerLink]="['/profile', article.author.username]"> {{article.author.username}} </a>
-            <span class="date">{{article.createdAt | date:'MMMM dd yyyy'}} </span>
+            <span class="date">{{article.createdAt | date:'MMMM dd, yyyy'}} </span>
         </div>
-        <button [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'" class="btn btn-sm pull-xs-right">
+        <button 
+            [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
+            class="btn btn-sm pull-xs-right"
+            (click)="favoriteClicked(article.slug, article.favorited)">
             <i class="ion-heart"></i> {{article.favoritesCount}}
         </button>
     </div>
-    <a class="preview-link" href="/article/hi-95lhn0">
+    <a class="preview-link" [routerLink]="['/article', article.slug]">
         <h1>{{article.title}}</h1>
         <p>{{article.description}}</p><span>Read more...</span>
-        <ul class="tag-list">
-        </ul>
+        <div class="tag-list">
+            <ng-container *ngFor="let tag of article.tagList">
+                <a href="#" class="tag-default tag-pill">{{tag}}</a>
+            </ng-container>
+        </div>
     </a>
 </div>
 <!-- loading -->

@@ -12,3 +12,11 @@ export interface Article {
     favoritesCount: number;
     author: Profile
 }
+
+export class ArticleComment {
+    id: number;
+    createAt: string;
+    updatedAt: string;
+    body: string;
+    author: Profile;
+}

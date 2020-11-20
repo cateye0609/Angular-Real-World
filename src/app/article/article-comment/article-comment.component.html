@@ -1,0 +1,16 @@
+<ng-container *ngFor="let comment of comments">
+    <div class="card">
+        <div class="card-block">
+            <p class="card-text"> {{comment?.body}} </p>
+        </div>
+        <div class="card-footer">
+            <a class="comment-author" [routerLink]="['/profile', comment?.author.username]">
+                <img class="comment-author-img"
+                    [src]="comment?.author?.image">
+            </a> &nbsp;
+            <a class="comment-author" [routerLink]="['/profile', comment?.author.username]"> {{comment?.author?.username}} </a>
+            <span class="date-posted"> {{comment?.createAt | date:'MMMM dd, yyyy'}} </span>
+            <span *ngIf="current_user?.username===comment?.author?.username" class="mod-options"><i class="ion-trash-a"></i></span>
+        </div>
+    </div>
+</ng-container>

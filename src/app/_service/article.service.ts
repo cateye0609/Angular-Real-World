@@ -4,6 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Article } from '../_model/article.model';
 import { ArticleListResponse, ArticleResponse } from '../_model/response.model';
+import { AuthService } from './auth.service';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -13,6 +14,7 @@ export class ArticleService {
 
   constructor(
     private commonService: CommonService,
+    private authService: AuthService,
     private http: HttpClient
   ) { }
 
@@ -21,9 +23,14 @@ export class ArticleService {
     let api_url = new URL(`${environment.api_url}/articles`);
     let params = this.commonService.getParams(this.getArticlesList); // get params name
     for (let i = 0; i < arguments.length; i++) {
-      api_url.searchParams.append(params[i], arguments[i]);
+      if (arguments[i]) {
+        api_url.searchParams.append(params[i], arguments[i]);
+      }
     }
     let headers = this.commonService.headers;
+    if (this.authService.isLoggedIn()) {
+      headers = this.commonService.createAuthorizedHeader(headers);
+    }
     return this.http.get<ArticleListResponse>(api_url.href, { headers: headers })
       .pipe(
         catchError(err => this.commonService.handleError(err))

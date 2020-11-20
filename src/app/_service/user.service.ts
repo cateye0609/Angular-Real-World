@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CommonService } from './common.service';
 
@@ -22,6 +22,10 @@ export class UserService {
     let headers = this.commonService.headers;
     return this.http.get<UserResponse>(`${environment.api_url}/user`, { headers: this.commonService.createAuthorizedHeader(headers) })
       .pipe(
+        map(res => {
+          localStorage.setItem('username', res.user.username);
+          return res;
+        }),
         catchError(err => this.commonService.handleError(err))
       );
   }

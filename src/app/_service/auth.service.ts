@@ -33,6 +33,7 @@ export class AuthService {
     return this.http.post<UserResponse>(`${environment.api_url}/users/login`, JSON.stringify(body), { headers: this.commonService.headers })
       .pipe(
         map(res => {
+          localStorage.setItem('username', res.user.username);
           this.logged_in.next(true);
           return res;
         }),

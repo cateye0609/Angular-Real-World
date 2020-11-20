@@ -7,12 +7,15 @@
                         onerror="this.src='https://static.productionready.io/images/smiley-cyrus.jpg'">
                     <h4>{{profile?.username}}</h4>
                     <p></p>
-                    <button class="btn btn-sm action-btn btn-outline-secondary">
+                    <button class="btn btn-sm action-btn btn-outline-secondary" *ngIf="profile.username!==current_user">
                         <i class="ion-plus-round"></i> &nbsp;
                         <ng-container *ngIf="profile.following">Follow</ng-container>
                         <ng-container *ngIf="!profile.following">Unfollow</ng-container>
                         {{profile?.username}}
                     </button>
+                    <a *ngIf="profile.username===current_user" routerLink="/settings" class="btn btn-sm btn-outline-secondary action-btn">
+                        <i class="ion-gear-a"></i> Edit Profile Settings 
+                    </a>
                 </div>
             </div>
         </div>

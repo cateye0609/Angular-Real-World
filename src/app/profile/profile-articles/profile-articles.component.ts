@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Article } from 'src/app/_model/article.model';
+import { ArticleService } from 'src/app/_service/article.service';
 
 @Component({
   selector: 'app-profile-articles',
@@ -7,10 +8,19 @@ import { Article } from 'src/app/_model/article.model';
   styleUrls: ['./profile-articles.component.css']
 })
 export class ProfileArticlesComponent implements OnInit {
-  @Input() max: number;
-  @Input() articles: Article[];
-  constructor() { }
+  articles: Article[];
 
-  ngOnInit(): void { }
+  constructor(
+    private articleService: ArticleService
+  ) { }
 
+  ngOnInit(): void {
+    this.getProfileArticles();
+  }
+
+  getProfileArticles() {
+    this.articleService.getArticlesList(null, localStorage.getItem('username')).subscribe(
+      res => this.articles = res.articles
+    )
+  }
 }

@@ -1,3 +1,7 @@
-ng-container button:last-child {
-    margin-left: 10px;
+.btn-group button, .btn-group a {
+    margin-right: 5px;
+}
+
+.btn-group button:last-child, .btn-group a:last-child {
+    margin: unset;
 }

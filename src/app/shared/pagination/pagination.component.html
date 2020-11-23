@@ -1,14 +1,16 @@
-<nav *ngIf="total_pages > 1">
-    <ul class="pagination">
-        <li
-            *ngFor="let item of [].constructor(total_pages); let currentIndex = index" 
-            class="page-item"
-            [ngClass]="{active: currentIndex+1 == current_index}">
-            <a
-                (click)="changePage(currentIndex+1)"
-                class="page-link">
-                {{currentIndex + 1}}
-            </a>
-        </li>
-    </ul>
-</nav>
+<div class="pagination-container" *ngIf="total_pages > 1">
+    <nav>
+        <ul class="pagination">
+            <li
+                *ngFor="let item of [].constructor(total_pages); let currentIndex = index" 
+                class="page-item"
+                [ngClass]="{active: currentIndex+1 == current_index}">
+                <a
+                    (click)="changePage(currentIndex+1)"
+                    class="page-link">
+                    {{currentIndex + 1}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

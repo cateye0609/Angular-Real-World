@@ -12,7 +12,7 @@
                     </a>
                     <span class="date"> {{article.createdAt | date:'MMMM dd, yyyy'}} </span>
                 </div>
-                <span *ngIf="current_user?.username===article.author?.username">
+                <span *ngIf="current_user?.username===article.author?.username" class="btn-group">
                     <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article.slug]">
                         <i class="ion-edit"></i> Edit Article
                     </a>
@@ -21,20 +21,22 @@
                     </button>
                 </span>
                 <ng-container *ngIf="current_user?.username!==article.author?.username">
-                    <button 
-                        class="btn btn-sm action-btn btn-outline-secondary"
-                        (click)="followClicked(article.author.username, article.author.following)">
-                        <i class="ion-plus-round"></i> &nbsp;
-                        <ng-container *ngIf="!article.author?.following">Follow</ng-container>
-                        <ng-container *ngIf="article.author?.following">Unfollow</ng-container>
-                        {{article.author?.username}}
-                    </button>
-                    <button 
-                        [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
-                        class="btn btn-sm"
-                        (click)="favoriteClicked(article)">
-                        <i class="ion-heart"></i> Favorite Article ({{article.favoritesCount}})
-                    </button>
+                    <div class="btn-group">
+                        <button 
+                            class="btn btn-sm action-btn btn-outline-secondary"
+                            (click)="followClicked(article.author.username, article.author.following)">
+                            <i class="ion-plus-round"></i> &nbsp;
+                            <ng-container *ngIf="!article.author?.following">Follow</ng-container>
+                            <ng-container *ngIf="article.author?.following">Unfollow</ng-container>
+                            {{article.author?.username}}
+                        </button>
+                        <button 
+                            [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
+                            class="btn btn-sm"
+                            (click)="favoriteClicked(article)">
+                            <i class="ion-heart"></i> Favorite Article ({{article.favoritesCount}})
+                        </button>
+                    </div>
                 </ng-container>
             </div>
         </div>
@@ -62,7 +64,7 @@
                         {{article.author?.username}} </a>
                     <span class="date"> November 20, 2020 </span>
                 </div>
-                <span *ngIf="current_user?.username===article.author?.username">
+                <span *ngIf="current_user?.username===article.author?.username" class="btn-group">
                     <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article.slug]">
                         <i class="ion-edit"></i> Edit Article
                     </a>
@@ -71,20 +73,22 @@
                     </button>
                 </span>
                 <ng-container *ngIf="current_user?.username!==article.author?.username">
-                    <button
-                        class="btn btn-sm action-btn btn-outline-secondary"
-                        (click)="followClicked(article.author.username, article.author.following)">
-                        <i class="ion-plus-round"></i> &nbsp;
-                        <ng-container *ngIf="!article.author?.following">Follow</ng-container>
-                        <ng-container *ngIf="article.author?.following">Unfollow</ng-container>
-                        {{article.author?.username}}
-                    </button>
-                    <button
-                        [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
-                        class="btn btn-sm"
-                        (click)="favoriteClicked(article)">
-                        <i class="ion-heart"></i> Favorite Article ({{article.favoritesCount}})
-                    </button>
+                    <div class="btn-group">
+                        <button
+                            class="btn btn-sm action-btn btn-outline-secondary"
+                            (click)="followClicked(article.author.username, article.author.following)">
+                            <i class="ion-plus-round"></i> &nbsp;
+                            <ng-container *ngIf="!article.author?.following">Follow</ng-container>
+                            <ng-container *ngIf="article.author?.following">Unfollow</ng-container>
+                            {{article.author?.username}}
+                        </button>
+                        <button
+                            [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
+                            class="btn btn-sm"
+                            (click)="favoriteClicked(article)">
+                            <i class="ion-heart"></i> Favorite Article ({{article.favoritesCount}})
+                        </button>
+                    </div>
                 </ng-container>
                 <span>
                 </span>

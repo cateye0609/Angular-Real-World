@@ -21,8 +21,7 @@ export class UserService {
 
   // get current user
   getUser() {
-    let headers = this.commonService.headers;
-    return this.http.get<UserResponse>(`${environment.api_url}/user`, { headers: this.commonService.createAuthorizedHeader(headers) })
+    return this.http.get<UserResponse>(`${environment.api_url}/user`)
       .pipe(
         map(res => {
           localStorage.setItem('username', res.user.username);
@@ -34,11 +33,10 @@ export class UserService {
 
   // update user
   updateSettings(data: SettingsModel) {
-    let headers = this.commonService.headers;
     const body = {
       'user': data
     };
-    return this.http.put<UserResponse>(`${environment.api_url}/user`, body, { headers: this.commonService.createAuthorizedHeader(headers) })
+    return this.http.put<UserResponse>(`${environment.api_url}/user`, body)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );
@@ -46,11 +44,7 @@ export class UserService {
 
   // get user's profile
   getProfile(username: string) {
-    let headers = this.commonService.headers;
-    if (this.authService.isLoggedIn()) {
-      headers = this.commonService.createAuthorizedHeader(headers);
-    }
-    return this.http.get<ProfileResponse>(`${environment.api_url}/profiles/${username}`, { headers: headers })
+    return this.http.get<ProfileResponse>(`${environment.api_url}/profiles/${username}`)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );
@@ -58,8 +52,7 @@ export class UserService {
 
   // follow user
   followUser(username: string) {
-    let headers = this.commonService.headers;
-    return this.http.post<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`, null, { headers: this.commonService.createAuthorizedHeader(headers) })
+    return this.http.post<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`, null)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );
@@ -67,8 +60,7 @@ export class UserService {
 
   // unfollow user
   unfollowUser(username: string) {
-    let headers = this.commonService.headers;
-    return this.http.delete<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`, { headers: this.commonService.createAuthorizedHeader(headers) })
+    return this.http.delete<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );

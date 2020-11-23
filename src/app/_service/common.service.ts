@@ -6,17 +6,6 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
-  // request header
-  public headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'charset': 'utf-8'
-  });
-
-  // header with token
-  createAuthorizedHeader(headers: HttpHeaders) {
-    return headers.append('Authorization', `Token ${localStorage.getItem('token')}`);
-  }
-
   constructor() { }
 
   public handleError(error: Error | HttpErrorResponse) {

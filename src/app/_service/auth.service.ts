@@ -30,7 +30,7 @@ export class AuthService {
     const body = {
       'user': data
     };
-    return this.http.post<UserResponse>(`${environment.api_url}/users/login`, JSON.stringify(body), { headers: this.commonService.headers })
+    return this.http.post<UserResponse>(`${environment.api_url}/users/login`, JSON.stringify(body))
       .pipe(
         map(res => {
           localStorage.setItem('username', res.user.username);
@@ -46,7 +46,7 @@ export class AuthService {
     const body = {
       'user': data
     };
-    return this.http.post<UserResponse>(`${environment.api_url}/users`, JSON.stringify(body), { headers: this.commonService.headers })
+    return this.http.post<UserResponse>(`${environment.api_url}/users`, JSON.stringify(body))
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );

@@ -12,7 +12,6 @@ import { CommonService } from './common.service';
   providedIn: 'root'
 })
 export class ArticleService {
-
   constructor(
     private commonService: CommonService,
     private authService: AuthService,
@@ -107,6 +106,14 @@ export class ArticleService {
       'comment': { 'body': comment }
     }
     return this.http.post<CommentResponse>(`${environment.api_url}/articles/${slug}/comments`, body, { headers: this.commonService.createAuthorizedHeader(headers) })
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
+
+  deleteComment(id: string, slug: string) {
+    let headers = this.commonService.headers;
+    return this.http.delete<ArticleResponse>(`${environment.api_url}/articles/${slug}/comments/${id}`, { headers: this.commonService.createAuthorizedHeader(headers) })
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );

@@ -37,4 +37,10 @@ export class ArticleCommentComponent implements OnChanges {
       res => this.current_user = res.profile
     )
   }
+
+  deleteComment(id: string) {
+    this.articleService.deleteComment(id, this.slug).subscribe(
+      res => this.getComments(this.slug)
+    );
+  }
 }

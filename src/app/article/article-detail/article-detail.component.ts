@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/_model/article.model';
 import { Profile } from 'src/app/_model/profile.model';
 import { ArticleService } from 'src/app/_service/article.service';
 import { UserService } from 'src/app/_service/user.service';
+import { ArticleCommentComponent } from '../article-comment/article-comment.component';
 
 @Component({
   selector: 'app-article-detail',
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/_service/user.service';
   styleUrls: ['./article-detail.component.css']
 })
 export class ArticleDetailComponent implements OnInit {
+  @ViewChild(ArticleCommentComponent, { static: false }) articleCommentC: ArticleCommentComponent
   article: Article;
   current_user: Profile;
   comment_body: string = "";
@@ -71,7 +73,10 @@ export class ArticleDetailComponent implements OnInit {
 
   addComment(slug: string) {
     this.articleService.addComment(slug, this.comment_body).subscribe(
-      res => this.getArticle()
+      res => {
+        this.articleCommentC.getComments(slug);
+        this.comment_body = '';
+      }
     );
   }
 }

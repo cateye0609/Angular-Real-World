@@ -5,12 +5,15 @@
         </div>
         <div class="card-footer">
             <a class="comment-author" [routerLink]="['/profile', comment?.author.username]">
-                <img class="comment-author-img"
-                    [src]="comment?.author?.image">
+                <img class="comment-author-img" [src]="comment?.author?.image">
             </a> &nbsp;
-            <a class="comment-author" [routerLink]="['/profile', comment?.author.username]"> {{comment?.author?.username}} </a>
+            <a class="comment-author" [routerLink]="['/profile', comment?.author.username]">
+                {{comment?.author?.username}}
+            </a>
             <span class="date-posted"> {{comment?.createAt | date:'MMMM dd, yyyy'}} </span>
-            <span *ngIf="current_user?.username===comment?.author?.username" class="mod-options"><i class="ion-trash-a"></i></span>
+            <span *ngIf="current_user?.username===comment?.author?.username" class="mod-options">
+                <i class="ion-trash-a" (click)="deleteComment(comment.id)"></i>
+            </span>
         </div>
     </div>
 </ng-container>

@@ -30,8 +30,8 @@
     Loading articles...
 </div>
 <!-- empty -->
-<div class="app-article-preview" [hidden]="!loading && articles.length">
+<div class="app-article-preview" [hidden]="loading || articles.length">
     No articles are here... yet.
 </div>
-<app-pagination *ngIf="total_pages" [total_pages]="!loading && total_pages" (onChange)="changePage($event)">
+<app-pagination *ngIf="total_pages" [total_pages]="total_pages" (onChange)="changePage($event)">
 </app-pagination>

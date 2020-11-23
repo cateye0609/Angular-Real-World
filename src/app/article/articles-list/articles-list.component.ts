@@ -13,7 +13,7 @@ export class ArticlesListComponent implements OnChanges {
   @Input() limit: number;
 
   articles: Article[];
-  loading = true;
+  loading = false;
   total_pages: number = 0;
 
   constructor(
@@ -32,6 +32,7 @@ export class ArticlesListComponent implements OnChanges {
   }
 
   getArticles(options: ArticleQueryOption) {
+    this.loading = true;
     this.articleService.getArticlesList(options).subscribe(
       res => {
         this.loading = false;

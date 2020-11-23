@@ -1,37 +1,43 @@
-<!-- articles list -->
-<div class="article-preview" *ngFor="let article of articles">
-    <div class="article-meta">
-        <a [routerLink]="['/profile/',article.author.username]">
-            <img [src]="article.author.image" alt="avt">
-        </a>
-        <div class="info">
-            <a class="author" [routerLink]="['/profile', article.author.username]"> {{article.author.username}} </a>
-            <span class="date">{{article.createdAt | date:'MMMM dd, yyyy'}} </span>
-        </div>
-        <button 
-            [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
-            class="btn btn-sm pull-xs-right"
-            (click)="favoriteClicked(article.slug, article.favorited)">
-            <i class="ion-heart"></i> {{article.favoritesCount}}
-        </button>
-    </div>
-    <a class="preview-link" [routerLink]="['/article', article.slug]">
-        <h1>{{article.title}}</h1>
-        <p>{{article.description}}</p><span>Read more...</span>
-        <div class="tag-list">
-            <ng-container *ngFor="let tag of article.tagList">
-                <a class="tag-default tag-pill tag-outline">{{tag}}</a>
-            </ng-container>
-        </div>
-    </a>
-</div>
 <!-- loading -->
-<div class="app-article-preview" [hidden]="!loading">
+<div class="loading" [hidden]="!loading">
     Loading articles...
 </div>
+<!-- articles list -->
+<ng-container *ngIf="!loading">
+    <div class="article-preview" *ngFor="let article of articles">
+        <div class="article-meta">
+            <a [routerLink]="['/profile/',article.author.username]">
+                <img [src]="article.author.image" alt="avt">
+            </a>
+            <div class="info">
+                <a class="author" [routerLink]="['/profile', article.author.username]"> {{article.author.username}} </a>
+                <span class="date">{{article.createdAt | date:'MMMM dd, yyyy'}} </span>
+            </div>
+            <button 
+                [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
+                class="btn btn-sm pull-xs-right"
+                (click)="favoriteClicked(article.slug, article.favorited)">
+                <i class="ion-heart"></i> {{article.favoritesCount}}
+            </button>
+        </div>
+        <a class="preview-link" [routerLink]="['/article', article.slug]">
+            <h1>{{article.title}}</h1>
+            <p>{{article.description}}</p><span>Read more...</span>
+            <div class="tag-list">
+                <ng-container *ngFor="let tag of article.tagList">
+                    <a class="tag-default tag-pill tag-outline">{{tag}}</a>
+                </ng-container>
+            </div>
+        </a>
+    </div>
+</ng-container>
 <!-- empty -->
 <div class="app-article-preview" [hidden]="loading || articles.length">
     No articles are here... yet.
 </div>
-<app-pagination *ngIf="total_pages" [total_pages]="total_pages" (onChange)="changePage($event)">
+<app-pagination 
+    [hidden]="loading"
+    *ngIf="total_pages"
+    [total_pages]="total_pages"
+    (onChange)="changePage($event)">
 </app-pagination>

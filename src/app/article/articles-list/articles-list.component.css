@@ -1,3 +1,7 @@
 .tag-list {
     float: right;
 }
+
+.loading {
+    margin: 20px auto;
+}

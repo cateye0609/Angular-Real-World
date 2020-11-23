@@ -16,7 +16,7 @@
             <button 
                 [ngClass]="article.favorited?'btn-primary':'btn-outline-primary'"
                 class="btn btn-sm pull-xs-right"
-                (click)="favoriteClicked(article.slug, article.favorited)">
+                (click)="favoriteClicked(article)">
                 <i class="ion-heart"></i> {{article.favoritesCount}}
             </button>
         </div>

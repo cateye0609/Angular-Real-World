@@ -47,14 +47,20 @@ export class ArticlesListComponent implements OnChanges {
     this.getArticles(this.options);
   }
 
-  favoriteClicked(slug: string, favorited: boolean) {
-    if (favorited) {
-      this.articleService.unfavoriteArticle(slug).subscribe(
-        res => this.onLoad()
+  favoriteClicked(article: Article) {
+    if (article.favorited) {
+      this.articleService.unfavoriteArticle(article.slug).subscribe(
+        res => {
+          article.favorited = false;
+          article.favoritesCount--;
+        }
       )
     } else {
-      this.articleService.favoriteArticle(slug).subscribe(
-        res => this.onLoad()
+      this.articleService.favoriteArticle(article.slug).subscribe(
+        res => {
+          article.favorited = true;
+          article.favoritesCount++;
+        }
       )
     }
   }

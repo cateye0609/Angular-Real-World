@@ -13,7 +13,7 @@ import { UserService } from 'src/app/_service/user.service';
 })
 export class SettingComponent implements OnInit {
   user: User;
-  settingErrors: Errors;
+  setting_errors: Errors;
 
   constructor(
     private authService: AuthService,
@@ -40,7 +40,7 @@ export class SettingComponent implements OnInit {
       res => {
         this.router.navigate(['/profile', res.user.username]);
       },
-      err => this.settingErrors = err.error.errors);
+      err => this.setting_errors = err.error.errors);
   }
 
   // logout

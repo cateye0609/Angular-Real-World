@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { SettingModule } from './setting/setting.module';
 import { ProfileModule } from './profile/profile.module';
+import { EditorModule } from './editor/editor.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProfileModule } from './profile/profile.module';
     HomeModule,
     SettingModule,
     ProfileModule,
+    EditorModule,
     AppRoutingModule,
   ],
   providers: [],

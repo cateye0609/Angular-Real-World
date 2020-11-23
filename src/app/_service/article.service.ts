@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ArticleQueryOption } from '../_model/article-list-config.model';
 import { Article } from '../_model/article.model';
@@ -15,7 +16,8 @@ export class ArticleService {
   constructor(
     private commonService: CommonService,
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   // get articles list
@@ -113,7 +115,25 @@ export class ArticleService {
   }
 
   // update article
-  updateArticle(slug: string) {
+  updateArticle(article: Article) {
+    let body: ArticleResponse = {
+      article: article
+    };
+    return this.http.put<ArticleResponse>(`${environment.api_url}/articles/${article.slug}`, body)
+      .pipe(
+        catchError(err => this.commonService.handleError(err))
+      );
+  }
 
+  // delete article
+  deleteArticle(slug: string) {
+    return this.http.delete(`${environment.api_url}/articles/${slug}`)
+      .pipe(
+        map(res => {
+          this.router.navigate(['/']);
+          return res;
+        }),
+        catchError(err => this.commonService.handleError(err))
+      );
   }
 }

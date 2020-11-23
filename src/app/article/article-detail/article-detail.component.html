@@ -13,10 +13,10 @@
                     <span class="date"> {{article.createdAt | date:'MMMM dd, yyyy'}} </span>
                 </div>
                 <span *ngIf="current_user?.username===article.author?.username">
-                    <a class="btn btn-sm btn-outline-secondary" href="/editor/testeintrag-001-h26w49">
+                    <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article.slug]">
                         <i class="ion-edit"></i> Edit Article
                     </a>
-                    <button class="btn btn-sm btn-outline-danger">
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle(article.slug)">
                         <i class="ion-trash-a"></i> Delete Article
                     </button>
                 </span>
@@ -42,11 +42,11 @@
     <div class="container page">
         <div class="row article-content">
             <div class="col-md-12">
-                <div [innerHTML]="article.body | markdown">
+                <div *ngIf="article.body" [innerHTML]="article.body | markdown">
                 </div>
                 <div class="tag-list">
                     <ng-container *ngFor="let tag of article.tagList">
-                        <a href="#" class="tag-default tag-pill">{{tag}}</a>
+                        <a href="#" class="tag-default tag-pill tag-outline">{{tag}}</a>
                     </ng-container>
                 </div>
             </div>
@@ -63,10 +63,10 @@
                     <span class="date"> November 20, 2020 </span>
                 </div>
                 <span *ngIf="current_user?.username===article.author?.username">
-                    <a class="btn btn-sm btn-outline-secondary" href="/editor/testeintrag-001-h26w49">
+                    <a class="btn btn-sm btn-outline-secondary" [routerLink]="['/editor', article.slug]">
                         <i class="ion-edit"></i> Edit Article
                     </a>
-                    <button class="btn btn-sm btn-outline-danger">
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteArticle(article.slug)">
                         <i class="ion-trash-a"></i> Delete Article
                     </button>
                 </span>

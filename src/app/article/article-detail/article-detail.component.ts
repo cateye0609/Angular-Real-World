@@ -79,4 +79,8 @@ export class ArticleDetailComponent implements OnInit {
       }
     );
   }
+
+  deleteArticle(slug: string) {
+    this.articleService.deleteArticle(slug).subscribe();
+  }
 }

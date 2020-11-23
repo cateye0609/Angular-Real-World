@@ -7,17 +7,30 @@ import { CommonService } from './common.service';
 import { SettingsModel } from '../_model/setting.model';
 import { ProfileResponse, UserResponse } from '../_model/response.model';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  is_logged_in: boolean;
 
   constructor(
     private http: HttpClient,
     private commonService: CommonService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.getAuthState();
+  }
+
+  // get auth state
+  getAuthState() {
+    this.authService.logged_in$.subscribe(
+      auth => this.is_logged_in = auth
+    );
+  }
 
   // get current user
   getUser() {
@@ -52,6 +65,10 @@ export class UserService {
 
   // follow user
   followUser(username: string) {
+    if (!this.is_logged_in) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return this.http.post<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`, null)
       .pipe(
         catchError(err => this.commonService.handleError(err))
@@ -60,6 +77,10 @@ export class UserService {
 
   // unfollow user
   unfollowUser(username: string) {
+    if (!this.is_logged_in) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return this.http.delete<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`)
       .pipe(
         catchError(err => this.commonService.handleError(err))

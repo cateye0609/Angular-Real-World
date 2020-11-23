@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Article } from 'src/app/_model/article.model';
 import { Profile } from 'src/app/_model/profile.model';
 import { ArticleService } from 'src/app/_service/article.service';
+import { AuthService } from 'src/app/_service/auth.service';
 import { UserService } from 'src/app/_service/user.service';
 import { ArticleCommentComponent } from '../article-comment/article-comment.component';
 
@@ -13,13 +15,17 @@ import { ArticleCommentComponent } from '../article-comment/article-comment.comp
 })
 export class ArticleDetailComponent implements OnInit {
   @ViewChild(ArticleCommentComponent, { static: false }) articleCommentC: ArticleCommentComponent
+  is_logged_in: boolean;
+  authState_subscription: Subscription;
   article: Article;
   current_user: Profile;
   comment_body: string = "";
   constructor(
     private activatedRoute: ActivatedRoute,
     private articleService: ArticleService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +35,8 @@ export class ArticleDetailComponent implements OnInit {
   onLoad() {
     this.article = {} as Article;
     this.getArticle();
-    this.getCurrentUser()
+    this.getCurrentUser();
+    this.getAuthState();
   }
 
   getArticle() {
@@ -82,5 +89,16 @@ export class ArticleDetailComponent implements OnInit {
 
   deleteArticle(slug: string) {
     this.articleService.deleteArticle(slug).subscribe();
+  }
+
+  // get auth state
+  getAuthState() {
+    this.authState_subscription = this.authService.logged_in$.subscribe(
+      auth => this.is_logged_in = auth
+    );
+  }
+
+  ngOnDestroy() {
+    this.authState_subscription.unsubscribe();
   }
 }

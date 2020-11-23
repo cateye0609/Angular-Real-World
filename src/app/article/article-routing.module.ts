@@ -4,7 +4,7 @@ import { AuthGuard } from '../_guard/auth.guard';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 
 const routes: Routes = [
-    { path: 'article/:slug', component: ArticleDetailComponent, canActivate: [AuthGuard] }
+    { path: 'article/:slug', component: ArticleDetailComponent }
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ArticleQueryOption } from '../_model/article-list-config.model';
@@ -13,12 +14,21 @@ import { CommonService } from './common.service';
   providedIn: 'root'
 })
 export class ArticleService {
+  is_logged_in: boolean;
   constructor(
     private commonService: CommonService,
     private authService: AuthService,
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {
+    this.getAuthState();
+  }
+  // get auth state
+  getAuthState() {
+    this.authService.logged_in$.subscribe(
+      auth => this.is_logged_in = auth
+    );
+  }
 
   // get articles list
   getArticlesList(options: ArticleQueryOption) {
@@ -34,20 +44,6 @@ export class ArticleService {
         catchError(err => this.commonService.handleError(err))
       );
   }
-
-  // get feed articles
-  // getFeed(options: ArticleQueryOption) {
-  //   let api_url = new URL(`${environment.api_url}/articles/feed`);
-  //   Object.keys(options.option)
-  //     .forEach((key) => {
-  //       api_url.searchParams.append(key, options.option[key])
-  //     });
-
-  //   return this.http.get<ArticleListResponse>(api_url.href)
-  //     .pipe(
-  //       catchError(err => this.commonService.handleError(err))
-  //     );
-  // }
 
   // get article
   getArticle(slug: string) {
@@ -73,20 +69,31 @@ export class ArticleService {
       );
   }
 
+  // favorite article
   favoriteArticle(slug: string) {
+    if (!this.is_logged_in) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return this.http.post<ArticleResponse>(`${environment.api_url}/articles/${slug}/favorite`, null)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );
   }
 
+  // unfavorite article
   unfavoriteArticle(slug: string) {
+    if (!this.is_logged_in) {
+      this.router.navigate(['/login']);
+      return;
+    }
     return this.http.delete<ArticleResponse>(`${environment.api_url}/articles/${slug}/favorite`)
       .pipe(
         catchError(err => this.commonService.handleError(err))
       );
   }
 
+  // add comment
   addComment(slug: string, comment: string) {
     const body = {
       'comment': { 'body': comment }

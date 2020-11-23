@@ -7,9 +7,9 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
     {
-        path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard], children: [
-            { path: '', component: ProfileArticlesComponent, canActivate: [AuthGuard] },
-            { path: 'favorites', component: ProfileFavoritesComponent, canActivate: [AuthGuard] }
+        path: 'profile/:username', component: ProfileComponent, children: [
+            { path: '', component: ProfileArticlesComponent },
+            { path: 'favorites', component: ProfileFavoritesComponent }
         ]
     },
 ];

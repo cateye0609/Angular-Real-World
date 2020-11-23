@@ -8,18 +8,27 @@
     <div class="container page">
         <div class="row">
             <div class="col-md-9">
-                <div class="feed-toggle"></div>
-                <ul class="nav nav-pills outline-active">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" *ngIf="is_logged_in">Your feed</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Global feed</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">#</a>
-                    </li>
-                </ul>
+                <div class="feed-toggle">
+                    <ul class="nav nav-pills outline-active">
+                        <li class="nav-item">
+                            <a
+                                *ngIf="is_logged_in"
+                                class="nav-link" [class.active]="list_query_options.type==='feed'"
+                                (click)="getArticles('feed')">Your feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a 
+                                class="nav-link" 
+                                [class.active]="list_query_options.type==='all' && !list_query_options.option.tag"
+                                (click)="getArticles('all')">Global feed</a>
+                        </li>
+                        <li class="nav-item" [hidden]="!list_query_options.option.tag">
+                            <a class="nav-link">{{list_query_options.option.tag}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- article list -->
+                <app-articles-list [limit]=10 [options]="list_query_options"></app-articles-list>
             </div>
             <div class="col-md-3">
                 <div class="sidebar">
@@ -27,12 +36,16 @@
                     <!-- tags list -->
                     <div class="tag-list">
                         <ng-container *ngFor="let tag of tags">
-                            <a href="#" class="tag-default tag-pill">{{tag}}</a>
+                            <a class="tag-default tag-pill" (click)="getArticles('all',{tag : tag})">{{tag}}</a>
                         </ng-container>
                     </div>
+                    <!-- loading tags -->
+                    <div [hidden]="!loading_tags">
+                        Loading tags...
+                    </div>
                     <!-- empty -->
-                    <div class="app-article-preview" [hidden]="tags.length">
-                        No articles are here... yet.
+                    <div [hidden]="loading_tags || tags.length">
+                        No tags are here... yet.
                     </div>
                 </div>
             </div>

@@ -23,6 +23,7 @@ export class ArticleService {
   // get articles list
   getArticlesList(options: ArticleQueryOption) {
     let api_url = new URL(`${environment.api_url}/articles`);
+    if (options.type === 'feed') api_url.href += '/feed';
     Object.keys(options.option)
       .forEach((key) => {
         api_url.searchParams.append(key, options.option[key])
@@ -35,18 +36,18 @@ export class ArticleService {
   }
 
   // get feed articles
-  getFeed(options: ArticleQueryOption) {
-    let api_url = new URL(`${environment.api_url}/articles/feed`);
-    Object.keys(options.option)
-      .forEach((key) => {
-        api_url.searchParams.append(key, options.option[key])
-      });
+  // getFeed(options: ArticleQueryOption) {
+  //   let api_url = new URL(`${environment.api_url}/articles/feed`);
+  //   Object.keys(options.option)
+  //     .forEach((key) => {
+  //       api_url.searchParams.append(key, options.option[key])
+  //     });
 
-    return this.http.get<ArticleListResponse>(api_url.href)
-      .pipe(
-        catchError(err => this.commonService.handleError(err))
-      );
-  }
+  //   return this.http.get<ArticleListResponse>(api_url.href)
+  //     .pipe(
+  //       catchError(err => this.commonService.handleError(err))
+  //     );
+  // }
 
   // get article
   getArticle(slug: string) {

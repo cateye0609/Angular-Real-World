@@ -18,15 +18,23 @@ export class EditorComponent implements OnInit {
     private acticleService: ArticleService,
     private router: Router
   ) {
-    this.article = { tagList: [] } as Article;
+    this.article = {
+      title: '',
+      description: '',
+      body: '',
+      tagList: []
+    } as Article;
   }
 
   ngOnInit(): void {
-    this.getArticle();
+    this.activatedRoute.data.subscribe(data => {
+      if (data['article']) {
+        this.article = data['article'];
+      }
+    });
   }
 
   addTag(event: any) {
-    console.log(event.target.value, this.article);
     const tag = event.target.value;
     if (!this.article.tagList.includes(tag)) {
       this.article.tagList.push(tag);
@@ -38,34 +46,17 @@ export class EditorComponent implements OnInit {
     this.article.tagList = this.article.tagList.filter(tag => tag !== tagName);
   }
 
-  getArticle() {
-    this.activatedRoute.params.subscribe(params => {
-      const slug = params['slug'];
-      const username = localStorage.getItem('username');
-      this.acticleService.getArticle(slug).subscribe(res => {
-        if (res.article.author.username === username) {
-          this.article = res.article;
-        } else {
-          this.router.navigate(['/']);
-        }
-      });
-    });
-  }
-
   formSubmit() {
-    console.log(this.article)
     if (this.article.slug) {
       this.acticleService.updateArticle(this.article).subscribe(
         res => this.router.navigate([`/article/${res.article.slug}`]),
         err => this.editor_errors = err.error.errors
       );
-      console.log('update')
     } else {
       this.acticleService.createArticle(this.article).subscribe(
         res => this.router.navigate([`/article/${res.article.slug}`]),
         err => this.editor_errors = err.error.errors
       );
-      console.log('publish');
     }
   }
 }

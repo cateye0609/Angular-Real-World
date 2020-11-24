@@ -13,7 +13,7 @@ export interface Article {
     author: Profile
 }
 
-export class ArticleComment {
+export interface ArticleComment {
     id: number;
     createAt: string;
     updatedAt: string;

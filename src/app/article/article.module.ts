@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ArticleRoutingModule } from './article-routing.module';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { ArticleCommentComponent } from './article-comment/article-comment.component';
+import { ArticleResolver } from './article-resolver.service';
+import { ArticleProfileResolver } from './article-profile-resolver.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { ArticleCommentComponent } from './article-comment/article-comment.compo
   ],
   exports: [
     ArticlesListComponent
-  ]
+  ],
+  providers: [ArticleResolver, ArticleProfileResolver]
 })
 export class ArticleModule { }

@@ -34,24 +34,11 @@ export class ArticleDetailComponent implements OnInit {
 
   onLoad() {
     this.article = {} as Article;
-    this.getArticle();
-    this.getCurrentUser();
-    this.getAuthState();
-  }
-
-  getArticle() {
-    this.activatedRoute.params.subscribe(params => {
-      let slug: string = params['slug'];
-      this.articleService.getArticle(slug).subscribe(
-        res => this.article = res.article
-      )
+    this.activatedRoute.data.subscribe(data => {
+      this.article = data['article'];
+      this.current_user = data['current_user'];
     })
-  }
-
-  getCurrentUser() {
-    this.userService.getProfile(localStorage.getItem('username')).subscribe(
-      res => this.current_user = res
-    )
+    this.getAuthState();
   }
 
   favoriteClicked(article: Article) {

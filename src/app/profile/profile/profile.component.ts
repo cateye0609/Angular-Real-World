@@ -20,19 +20,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profile = {} as Profile;
-    this.getUsername();
-  }
-
-  getUsername() {
-    this.activatedRoute.params.subscribe(params => {
-      let username = params['username'];
-      ////
-      this.getProfile(username);
-    });
-  }
-
-  getProfile(username: string) {
-    this.userService.getProfile(username).subscribe(res => this.profile = res)
+    this.activatedRoute.data.subscribe(data => this.profile = data['profile'])
   }
 
   followClicked(username: string, followed: boolean) {

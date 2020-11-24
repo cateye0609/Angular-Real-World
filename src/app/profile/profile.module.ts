@@ -6,14 +6,20 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileArticlesComponent } from './profile-articles/profile-articles.component';
 import { ProfileFavoritesComponent } from './profile-favorites/profile-favorites.component';
 import { ArticleModule } from '../article/article.module';
+import { ProfileResolver } from './profile-resolver.service';
 
 @NgModule({
-  declarations: [ProfileComponent, ProfileArticlesComponent, ProfileFavoritesComponent],
+  declarations: [
+    ProfileComponent,
+    ProfileArticlesComponent,
+    ProfileFavoritesComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
     ArticleModule,
     ProfileRoutingModule
-  ]
+  ],
+  providers: [ProfileResolver]
 })
 export class ProfileModule { }

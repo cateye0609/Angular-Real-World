@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Errors } from 'src/app/_model/error.model';
 import { SettingsModel } from 'src/app/_model/setting.model';
 import { User } from 'src/app/_model/user.model';
@@ -18,19 +18,15 @@ export class SettingComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.user = {} as User;
   }
 
   ngOnInit(): void {
-    this.getUser();
-  }
-
-  // get current user
-  getUser() {
-    this.userService.getUser().subscribe(res => {
-      this.user = res;
+    this.activatedRoute.data.subscribe(data => {
+      this.user = data['user'];
     })
   }
 

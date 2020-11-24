@@ -48,6 +48,7 @@ export class ArticleService {
   getArticle(slug: string) {
     return this.http.get<ArticleResponse>(`${environment.api_url}/articles/${slug}`)
       .pipe(
+        map(res => res.article),
         catchError(err => this.commonService.handleError(err))
       );
   }

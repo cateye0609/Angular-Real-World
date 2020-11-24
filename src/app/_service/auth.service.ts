@@ -35,7 +35,7 @@ export class AuthService {
         map(res => {
           localStorage.setItem('username', res.user.username);
           this.logged_in.next(true);
-          return res;
+          return res.user;
         }),
         catchError(err => this.commonService.handleError(err))
       );

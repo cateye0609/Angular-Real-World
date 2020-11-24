@@ -8,6 +8,10 @@
     list-style-type: none;
 }
 
+.pagination .page-link {
+    margin-bottom: 5px;
+}
+
 .pagination li:not(.active):hover {
     cursor: pointer;
 }

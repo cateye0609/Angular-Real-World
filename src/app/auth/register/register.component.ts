@@ -19,9 +19,8 @@ export class RegisterComponent implements OnInit {
 
   // register
   registerSubmit(data: RegisterModel) {
-    this.authService.register(data).subscribe(res => {
-      // go to login
-      this.router.navigate(['/login']);
-    })
+    this.authService.register(data).subscribe(
+      res => this.router.navigate(['/login'])
+    )
   }
 }

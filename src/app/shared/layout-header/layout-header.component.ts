@@ -27,7 +27,7 @@ export class LayoutHeaderComponent implements OnInit, OnDestroy {
 
   getUser() {
     this.userService.getUser().subscribe(res => {
-      this.user = res.user;
+      this.user = res;
     })
   }
 

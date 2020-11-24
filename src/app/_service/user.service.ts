@@ -8,7 +8,6 @@ import { SettingsModel } from '../_model/setting.model';
 import { ProfileResponse, UserResponse } from '../_model/response.model';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +37,7 @@ export class UserService {
       .pipe(
         map(res => {
           localStorage.setItem('username', res.user.username);
-          return res;
+          return res.user;
         }),
         catchError(err => this.commonService.handleError(err))
       );
@@ -51,6 +50,7 @@ export class UserService {
     };
     return this.http.put<UserResponse>(`${environment.api_url}/user`, body)
       .pipe(
+        map(res => res.user),
         catchError(err => this.commonService.handleError(err))
       );
   }
@@ -59,6 +59,7 @@ export class UserService {
   getProfile(username: string) {
     return this.http.get<ProfileResponse>(`${environment.api_url}/profiles/${username}`)
       .pipe(
+        map(res => res.profile),
         catchError(err => this.commonService.handleError(err))
       );
   }
@@ -71,6 +72,7 @@ export class UserService {
     }
     return this.http.post<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`, null)
       .pipe(
+        map(res => res.profile),
         catchError(err => this.commonService.handleError(err))
       );
   }
@@ -83,6 +85,7 @@ export class UserService {
     }
     return this.http.delete<ProfileResponse>(`${environment.api_url}/profiles/${username}/follow`)
       .pipe(
+        map(res => res.profile),
         catchError(err => this.commonService.handleError(err))
       );
   }

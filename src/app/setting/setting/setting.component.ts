@@ -30,7 +30,7 @@ export class SettingComponent implements OnInit {
   // get current user
   getUser() {
     this.userService.getUser().subscribe(res => {
-      this.user = res.user;
+      this.user = res;
     })
   }
 
@@ -38,7 +38,7 @@ export class SettingComponent implements OnInit {
   settingSubmit(data: SettingsModel) {
     this.userService.updateSettings(data).subscribe(
       res => {
-        this.router.navigate(['/profile', res.user.username]);
+        this.router.navigate(['/profile', res.username]);
       },
       err => this.setting_errors = err.error.errors);
   }

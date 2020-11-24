@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/_model/article.model';
 import { Profile } from 'src/app/_model/profile.model';
-import { ArticleService } from 'src/app/_service/article.service';
 import { UserService } from 'src/app/_service/user.service';
 
 @Component({
@@ -16,8 +15,7 @@ export class ProfileComponent implements OnInit {
   my_articles: Article[];
   constructor(
     private activatedRoute: ActivatedRoute,
-    private userService: UserService,
-    private articleService: ArticleService
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -34,9 +32,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfile(username: string) {
-    this.userService.getProfile(username).subscribe(res => {
-      this.profile = res.profile;
-    })
+    this.userService.getProfile(username).subscribe(res => this.profile = res)
   }
 
   followClicked(username: string, followed: boolean) {

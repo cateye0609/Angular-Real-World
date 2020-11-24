@@ -34,7 +34,7 @@ export class ArticleCommentComponent implements OnChanges {
 
   getCurrentUser() {
     this.userService.getProfile(localStorage.getItem('username')).subscribe(
-      res => this.current_user = res.profile
+      res => this.current_user = res
     )
   }
 

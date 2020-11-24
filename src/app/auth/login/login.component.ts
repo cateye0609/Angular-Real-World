@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   loginSubmit(data: LoginModel) {
     this.authService.login(data).subscribe(res => {
       // save token
-      localStorage.setItem('token', res.user.token);
+      localStorage.setItem('token', res.token);
       // go to home page
       this.router.navigate(['/']);
     });

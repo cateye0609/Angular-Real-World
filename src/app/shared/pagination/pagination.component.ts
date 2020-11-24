@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class PaginationComponent implements OnInit {
-  @Input() public total_pages: number;  // Total pages
+  @Input() public total_pages: number;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
   // Trang hiện tại
   current_index: number = 1;
